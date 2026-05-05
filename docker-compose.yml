@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    container_name: ai-automatisering-film
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3051:3000"
+    env_file:
+      - .env
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+      - NODE_ENV=production
+      - TZ=Europe/Copenhagen
