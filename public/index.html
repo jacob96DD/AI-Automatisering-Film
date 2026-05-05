@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image 2 Studio</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="control-panel" aria-label="Image generation controls">
+        <header class="brand-bar">
+          <div>
+            <p class="eyebrow">OpenAI image generator</p>
+            <h1>Image 2 Studio</h1>
+          </div>
+          <span id="keyStatus" class="status-pill">Checking key</span>
+        </header>
+
+        <form id="generatorForm" class="generator-form">
+          <label class="field prompt-field">
+            <span>Prompt</span>
+            <textarea id="prompt" name="prompt" rows="7" placeholder="A cinematic product photo of a translucent smart speaker on a graphite desk, soft window light, precise reflections" required></textarea>
+          </label>
+
+          <div class="controls-grid">
+            <label class="field">
+              <span>Images</span>
+              <input id="count" name="count" type="number" min="1" max="10" value="4" />
+            </label>
+
+            <label class="field">
+              <span>Aspect</span>
+              <select id="aspect" name="aspect">
+                <option value="1:1" selected>1:1 Square</option>
+                <option value="16:9">16:9 Wide</option>
+                <option value="3:2">3:2 Landscape</option>
+                <option value="2:3">2:3 Portrait</option>
+                <option value="auto">Auto</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Resolution</span>
+              <select id="size" name="size">
+                <option value="1024x1024" selected>1024 x 1024</option>
+                <option value="1536x864">1536 x 864</option>
+                <option value="1536x1024">1536 x 1024</option>
+                <option value="1024x1536">1024 x 1536</option>
+                <option value="auto">Auto</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Quality</span>
+              <select id="quality" name="quality">
+                <option value="auto" selected>Auto</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Format</span>
+              <select id="outputFormat" name="outputFormat">
+                <option value="png" selected>PNG</option>
+                <option value="jpeg">JPEG</option>
+                <option value="webp">WebP</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Model</span>
+              <select id="model" name="model">
+                <option value="gpt-image-2.0">gpt-image-2.0</option>
+                <option value="gpt-image-1.5" selected>gpt-image-1.5</option>
+                <option value="gpt-image-1">gpt-image-1</option>
+                <option value="gpt-image-1-mini">gpt-image-1-mini</option>
+              </select>
+            </label>
+          </div>
+
+          <details class="advanced">
+            <summary>Advanced options</summary>
+            <div class="controls-grid">
+              <label class="field">
+                <span>Background</span>
+                <select id="background" name="background">
+                  <option value="auto" selected>Auto</option>
+                  <option value="opaque">Opaque</option>
+                  <option value="transparent">Transparent</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Moderation</span>
+                <select id="moderation" name="moderation">
+                  <option value="auto" selected>Auto</option>
+                  <option value="low">Low</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Reference fidelity</span>
+                <select id="inputFidelity" name="inputFidelity">
+                  <option value="low" selected>Low</option>
+                  <option value="high">High</option>
+                </select>
+              </label>
+            </div>
+          </details>
+
+          <section class="upload-zone" id="uploadZone" aria-label="Reference image upload">
+            <input id="references" name="references" type="file" accept="image/png,image/jpeg,image/webp" multiple />
+            <div>
+              <strong>Drop reference images here</strong>
+              <span>PNG, JPEG, or WebP. Up to 16 images.</span>
+            </div>
+          </section>
+
+          <div id="referencePreview" class="reference-preview" aria-live="polite"></div>
+
+          <div class="action-row">
+            <button class="primary-button" type="submit">
+              <span class="button-icon">✦</span>
+              Generate
+            </button>
+            <button class="ghost-button" id="clearButton" type="button">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="results-panel" aria-label="Generated images">
+        <div class="results-toolbar">
+          <div>
+            <p class="eyebrow">Output</p>
+            <h2>Generations</h2>
+          </div>
+          <span id="resultMeta">Waiting for a prompt</span>
+        </div>
+        <div id="errorBox" class="error-box" hidden></div>
+        <div id="loadingState" class="loading-state" hidden>
+          <div class="spinner"></div>
+          <p>Generating images...</p>
+        </div>
+        <div id="gallery" class="gallery empty">
+          <div class="empty-state">
+            <div class="empty-frame"></div>
+            <p>Your generated images will appear here.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
